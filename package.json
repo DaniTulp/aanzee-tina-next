@@ -1,5 +1,5 @@
 {
-  "name": "aanzee-tina-next",
+  "name": "@danitulp/aanzee-tina-next",
   "version": "0.1.0",
   "main": "./build/index.js",
   "publishConfig": {
