@@ -1,8 +1,10 @@
 {
   "name": "aanzee-tina-next",
   "version": "0.1.0",
-  "private": true,
   "main": "./build/index.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "test": "jest --watch",
     "test:ci": "jest --ci"
@@ -37,5 +39,8 @@
   "peerDependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
-  }
+  },
+  "repository": "https://github.com/DaniTulp/aanzee-tina-next.git",
+  "author": "Dani Tulp <danitulp@gmail.com>",
+  "license": "MIT"
 }
