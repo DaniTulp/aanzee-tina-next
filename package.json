@@ -1,6 +1,6 @@
 {
   "name": "@danitulp/aanzee-tina-next",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "./build/index.js",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -17,6 +17,8 @@
     "axios": "^0.19.2",
     "cookie": "^0.4.1",
     "global": "^4.4.0",
+    "next": "^9.4.4",
+    "react-tinacms-editor": "^0.7.2",
     "styled-components": "^5.1.0",
     "tinacms": "^0.20.0"
   },
@@ -32,6 +34,8 @@
     "autoprefixer": "^9.7.6",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-test-renderer": "^16.13.1",
     "ts-jest": "^26.1.0",
     "typescript": "^3.8.3"

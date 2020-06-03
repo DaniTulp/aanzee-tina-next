@@ -1,5 +1,6 @@
 import { SDK } from "@directus/sdk-js";
 import { IStorageAPI } from "@directus/sdk-js/dist/types/Configuration";
+//TODO fix env as a configuration parameter not .env
 export function createServerClient(preview: boolean = false) {
   const client = new SDK({
     url: process.env.DIRECTUS_URL!,

@@ -1,8 +1,5 @@
 import { FormOptions, Field } from "tinacms";
-import {
-  useDirectusClient,
-  useDirectusAuthClient,
-} from "./useDirectus";
+import { useDirectusClient, useDirectusAuthClient } from "./useDirectus";
 import { useEffect, useState } from "react";
 import { useLocalForm } from "@tinacms/react-core";
 import { IField } from "@directus/sdk-js/dist/types/schemes/directus/Field";
@@ -22,7 +19,15 @@ export function useDirectusForm(
     label,
     formId,
     initialValues,
-  }: { label?: string; formId?: any; initialValues: any }
+    customFields,
+  }: {
+    label?: string;
+    formId?: any;
+    initialValues: any;
+    customFields?: {
+      [key: string]: FieldConstructor;
+    };
+  }
 ) {
   const [client] = useDirectusAuthClient();
   const [resolvedFields, setResolvedFields] = useState<Field[]>([]);
@@ -40,7 +45,7 @@ export function useDirectusForm(
     label,
     fields: resolvedFields,
   });
-  const fields = useDirectusFields(collection, initialValues.id);
+  const fields = useDirectusFields(collection, initialValues.id, customFields);
   useEffect(() => setResolvedFields(fields), [fields]);
   return [values, form];
 }
