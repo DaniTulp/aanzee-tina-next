@@ -24,5 +24,6 @@ test("Expect to get a directusclient back", () => {
   );
 
   const { result } = renderHook(() => useDirectusClient, { wrapper });
+  
   expect(result.current).toBeTruthy();
 });

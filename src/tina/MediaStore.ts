@@ -1,6 +1,6 @@
-import { MediaStore, MediaUploadOptions, Media } from "tinacms";
 import SDK from "@directus/sdk-js";
 import { IFileResponse } from "@directus/sdk-js/dist/types/schemes/response/File";
+import { MediaStore, Media, MediaUploadOptions } from "tinacms";
 
 export class DirectusMediaStore implements MediaStore {
   accept = "*";

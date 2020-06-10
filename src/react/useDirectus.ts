@@ -3,7 +3,6 @@ import SDK from "@directus/sdk-js";
 import { useRouter } from "next/router";
 import Axios from "axios";
 import { useInterval } from "./useInterval";
-
 export const ERROR_MISSING_CLIENT = `useDirectusAuthClient could not find an instance of Directus SDK`;
 
 export const DirectusContext = React.createContext<SDK | null>(null);
@@ -14,6 +13,7 @@ export function useDirectusAuthClient(): [SDK, boolean] {
   if (!client) {
     throw new Error(ERROR_MISSING_CLIENT);
   }
+  //TODO to much business logic?
   const [isCheckingLogin, setIsCheckingLogin] = React.useState(true);
   const router = useRouter();
   useInterval(async () => {

@@ -1,7 +1,7 @@
 import { AbstractField } from "./AbstractField";
-import { AnyField } from "@tinacms/forms";
 import { IField } from "@directus/sdk-js/dist/types/schemes/directus/Field";
 import SDK from "@directus/sdk-js";
+import { AnyField } from "@tinacms/forms";
 
 export class ImageField extends AbstractField {
   constructor(

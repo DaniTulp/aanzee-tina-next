@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "./Select";
-import { FieldPlugin, wrapFieldsWithMeta } from "tinacms";
+import { wrapFieldsWithMeta } from "@tinacms/fields";
 type SingleRelationProps = {
   input: any;
   field: {
@@ -42,8 +42,7 @@ const SingleRelation = ({ input, field, form }: SingleRelationProps) => {
 };
 
 const SingleRelationPlugin = wrapFieldsWithMeta(SingleRelation)
-
-export const SingleRelationFieldPlugin: FieldPlugin = {
+export const SingleRelationFieldPlugin = {
   Component: SingleRelationPlugin,
   name: "single-relation",
   __type: "field",

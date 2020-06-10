@@ -1,7 +1,5 @@
-import { FormOptions, Field } from "tinacms";
-import { useDirectusClient, useDirectusAuthClient } from "./useDirectus";
+import { useDirectusClient } from "./useDirectus";
 import { useEffect, useState } from "react";
-import { useLocalForm } from "@tinacms/react-core";
 import { IField } from "@directus/sdk-js/dist/types/schemes/directus/Field";
 import { TextAreaField } from "../fields/TextAreaField";
 import { FieldConstructor } from "../fields/AbstractField";
@@ -12,47 +10,47 @@ import { ImageField } from "../fields/ImageField";
 import { StatusField } from "../fields/StatusField";
 import { UndefinedField } from "../fields/UndefinedField";
 import { TagsField } from "../fields/TagsField";
+import { Field } from "tinacms";
 
-export function useDirectusForm(
-  collection: string,
-  {
-    label,
-    formId,
-    initialValues,
-    customFields,
-  }: {
-    label?: string;
-    formId?: any;
-    initialValues: any;
-    customFields?: {
-      [key: string]: FieldConstructor;
-    };
-  }
-) {
-  const [client] = useDirectusAuthClient();
-  const [resolvedFields, setResolvedFields] = useState<Field[]>([]);
+// export function useDirectusForm(
+//   collection: string,
+//   fields: Field[],
+//   {
+//     label,
+//     formId,
+//     initialValues,
+//   }: {
+//     label?: string;
+//     formId?: any;
+//     initialValues?: any;
+//   }
+// ) {
+//   const client = useDirectusClient();
 
-  const formConfig: FormOptions<any, Field> = {
-    initialValues,
-    onSubmit: async (values: any) =>
-      //TODO currently assume it has an id
-      await client.updateItem(collection, initialValues.id, values),
-    id: formId,
-    label: label ?? "",
-    fields: resolvedFields,
-  };
-  const [values, form] = useLocalForm(formConfig, {
-    label,
-    fields: resolvedFields,
-  });
-  const fields = useDirectusFields(collection, initialValues.id, customFields);
-  useEffect(() => setResolvedFields(fields), [fields]);
-  return [values, form];
-}
+//   const formConfig: FormOptions<any, Field> = {
+//     initialValues,
+//     onSubmit: async (values: any) => {
+//       if (initialValues?.id) {
+//         //TODO currently assume it has an id
+//         await client.updateItem(collection, initialValues?.id, values);
+//         return;
+//       }
+//       await client.createItem(collection, values);
+//     },
+//     id: formId,
+//     label: label ?? "",
+//     fields,
+//   };
+//   const [values, form] = useLocalForm(formConfig, {
+//     label,
+//     fields,
+//   });
+//   return {values, form}
+// }
 
 export function useDirectusFields(
   collection: string,
-  id: number,
+  id?: number,
   customFields?: {
     [key: string]: FieldConstructor;
   }
@@ -64,11 +62,10 @@ export function useDirectusFields(
 
   useEffect(() => {
     async function getFields() {
-      const apiFields = (await client.getFields(collection)).data
+      const apiFields = (await client.getFields(collection)).data.filter(
         //@ts-ignore
-        .filter(({ hidden_detail, readonly }: IField) => {
-          return !hidden_detail && !readonly;
-        });
+        ({ hidden_detail, readonly }: IField) => !hidden_detail && !readonly
+      );
       //@ts-ignore
       setApiFields(apiFields);
     }

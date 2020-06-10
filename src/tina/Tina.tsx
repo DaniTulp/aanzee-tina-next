@@ -20,13 +20,13 @@ export function Tina({ children }: { children: ReactNode }) {
           ? new DirectusMediaStore(createBrowserClient())
           : new DummyMediaStore(),
     },
-    plugins: [ImageFieldPlugin, SingleRelationFieldPlugin],
   };
 
   const cms = useMemo(() => new TinaCMS(config), [config]);
   cms.fields.add(HtmlFieldPlugin);
   cms.fields.add(MarkdownFieldPlugin);
-
+  cms.fields.add(ImageFieldPlugin);
+  cms.fields.add(SingleRelationFieldPlugin);
   return <TinaProvider cms={cms}>{children}</TinaProvider>;
 }
 //TODO temporary fix.

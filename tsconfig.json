@@ -1,28 +1,26 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "declaration": true,
-    "pretty": true,
-    "sourceMap": false,
-    "strict": true,
-    "allowJs": true,
+    "module": "esnext",
     "esModuleInterop": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "noImplicitReturns": false,
-    "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "esnext"],
+    "types": ["react"],
+    "typeRoots": ["node_modules/@types"],
     "outDir": "build",
-    "importHelpers": true,
-    "baseUrl": "./src",
-    "lib": ["es2015", "dom.iterable", "es2016.array.include", "es2017.object", "dom"],
-    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "exclude": [
     "node_modules",
-    "build",
-    "__tests__",
+    "__tests__"
   ]
 }

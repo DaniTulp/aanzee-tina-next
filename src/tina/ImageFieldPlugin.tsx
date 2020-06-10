@@ -1,11 +1,6 @@
 import * as React from "react";
-import { useCMS } from "@tinacms/react-core";
-import {
-  InputProps,
-  wrapFieldsWithMeta,
-  ImageUpload,
-} from "@tinacms/fields";
-import { FieldPlugin } from "tinacms";
+import { useCMS } from "tinacms";
+import { wrapFieldsWithMeta, InputProps, ImageUpload } from "@tinacms/fields";
 
 type FieldProps = any;
 interface ImageProps {
@@ -35,8 +30,8 @@ export const ImageField = wrapFieldsWithMeta<InputProps, ImageProps>(
         value={props.input.value}
         previewSrc={previewSrc}
         onDrop={async ([file]: File[]) => {
-          // @ts-ignore cms.media
           const [media] = await cms.media.store.persist([
+            // @ts-ignore cms.media
             {
               file,
             },
@@ -60,7 +55,7 @@ export const ImageField = wrapFieldsWithMeta<InputProps, ImageProps>(
   }
 );
 
-export const ImageFieldPlugin: FieldPlugin = {
+export const ImageFieldPlugin = {
   Component: ImageField,
   __type: "field",
   name: "async-image",
