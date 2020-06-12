@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "tests/*": ["__tests__/*"]
+    },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
@@ -11,16 +16,25 @@
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["dom", "esnext"],
-    "types": ["react"],
-    "typeRoots": ["node_modules/@types"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "types": [
+      "react",
+      "jest",
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "outDir": "build",
   },
   "include": [
-    "./src/**/*"
+    "**/*.ts",
+    "**/*.tsx",
   ],
   "exclude": [
     "node_modules",
-    "__tests__"
   ]
 }

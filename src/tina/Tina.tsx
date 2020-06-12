@@ -8,24 +8,29 @@ import {
 } from "tinacms";
 import { HtmlFieldPlugin, MarkdownFieldPlugin } from "react-tinacms-editor";
 import { DirectusMediaStore } from "./MediaStore";
-import { ImageFieldPlugin } from "./ImageFieldPlugin";
 import { SingleRelationFieldPlugin } from "./Relation/SingleRelationField";
-import { createBrowserClient } from "./../lib/createDirectusClient";
+import { createBrowserClient } from "src/lib/createDirectusClient";
 
-export function Tina({ children }: { children: ReactNode }) {
-  const config: TinaCMSConfig = {
+export function Tina({
+  children,
+  config,
+}: {
+  children: ReactNode;
+  config?: TinaCMSConfig;
+}) {
+  const tinaCMSConfig: TinaCMSConfig = {
     media: {
       store:
         typeof window !== "undefined"
           ? new DirectusMediaStore(createBrowserClient())
           : new DummyMediaStore(),
     },
+    ...config,
   };
 
-  const cms = useMemo(() => new TinaCMS(config), [config]);
+  const cms = useMemo(() => new TinaCMS(tinaCMSConfig), [tinaCMSConfig]);
   cms.fields.add(HtmlFieldPlugin);
   cms.fields.add(MarkdownFieldPlugin);
-  cms.fields.add(ImageFieldPlugin);
   cms.fields.add(SingleRelationFieldPlugin);
   return <TinaProvider cms={cms}>{children}</TinaProvider>;
 }

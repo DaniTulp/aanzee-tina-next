@@ -1,10 +1,7 @@
 import React from "react";
 import { renderHook } from "@testing-library/react-hooks";
-import {
-  DirectusContext,
-  useDirectusClient,
-} from "../src/react/useDirectus";
-import { createBrowserClient } from "../src/lib/createDirectusClient";
+import { useDirectusClient, DirectusContext } from "src/react/useDirectus";
+import { createBrowserClient } from "src/lib/createDirectusClient";
 
 test("Expect exception to be thrown if there is no context", () => {
   const { result } = renderHook(() => useDirectusClient());
@@ -12,7 +9,7 @@ test("Expect exception to be thrown if there is no context", () => {
   expect(() => {
     expect(result.current).not.toBe(undefined);
   }).toThrowError(
-    "useDirectusAuthClient could not find an instance of Directus SDK"
+    "useDirectusClient could not find an instance of Directus SDK"
   );
 });
 
@@ -24,6 +21,6 @@ test("Expect to get a directusclient back", () => {
   );
 
   const { result } = renderHook(() => useDirectusClient, { wrapper });
-  
+
   expect(result.current).toBeTruthy();
 });

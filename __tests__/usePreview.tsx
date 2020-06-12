@@ -1,6 +1,6 @@
 import React from 'react'
 import { renderHook } from "@testing-library/react-hooks";
-import { usePreview, PreviewContext } from "../src/react/usePreview";
+import { usePreview, PreviewContext } from "src/react/usePreview";
 
 test("should get value from preview provider", () => {
   const wrapper = ({ children }: any) => (
@@ -8,4 +8,5 @@ test("should get value from preview provider", () => {
   );
   const { result } = renderHook(() => usePreview(), { wrapper });
   expect(result.current).toBe(false)
+  
 });
