@@ -17,7 +17,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: yarn install, build, and test
+          always-auth: true
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@danitulp"
+      - name: yarn install, build, test and publish
         run: |
           yarn
           yarn build
