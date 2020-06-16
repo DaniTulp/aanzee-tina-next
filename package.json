@@ -1,6 +1,6 @@
 {
   "name": "@danitulp/aanzee-tina-next",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "./build/index.cjs.js",
   "module": "./build/lib/index.js",
   "types": "src/index.ts",
@@ -9,8 +9,8 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
-    "test": "jest --watch",
-    "test:ci": "jest --ci",
+    "test": "jest --ci",
+    "test-watch": "jest --watch",
     "watch": "rollup --config --watch",
     "build": "rollup --config"
   },
