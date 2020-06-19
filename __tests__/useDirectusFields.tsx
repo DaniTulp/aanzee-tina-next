@@ -1,19 +1,31 @@
-import React from "react";
 import { renderHook } from "@testing-library/react-hooks";
-import { DirectusContext } from "src/react/useDirectus";
-import { useDirectusFields } from "src/react/useDirectusFields";
+import React from "react";
+import {
+  AuthContext,
+  createBrowserClient,
+  DirectusContext,
+  Tina,
+  useDirectusFields
+} from "src";
 import { TextField } from "src/fields/TextField";
-import { Tina } from "src/tina/Tina";
-import { createBrowserClient } from "src/lib/createDirectusClient";
+import { rest, server } from "test/server";
+
+const wrapper = ({ children }: any) => (
+  <Tina>
+    <DirectusContext.Provider value={createBrowserClient()}>
+      <AuthContext.Provider
+        value={{
+          login: () => {},
+          isAuthenticated: true,
+        }}
+      >
+        {children}
+      </AuthContext.Provider>
+    </DirectusContext.Provider>
+  </Tina>
+);
 
 test("should be able to create tinacms form fields from directus fields and filter out readonly and hidden fields", async () => {
-  const wrapper = ({ children }: any) => (
-    <Tina>
-      <DirectusContext.Provider value={createBrowserClient()}>
-        {children}
-      </DirectusContext.Provider>
-    </Tina>
-  );
   const { result, waitForNextUpdate } = renderHook(
     () => useDirectusFields("news"),
     { wrapper }
@@ -22,7 +34,7 @@ test("should be able to create tinacms form fields from directus fields and filt
 
   await waitForNextUpdate();
 
-  expect(result.current.length).toEqual(1);
+  expect(result.current.length).toEqual(2);
   expect(result.current[0]).toEqual(
     expect.objectContaining({
       component: "select",
@@ -31,16 +43,14 @@ test("should be able to create tinacms form fields from directus fields and filt
       name: "status",
     })
   );
+  expect(result.current[1]).toEqual(
+    expect.objectContaining({
+      component: "undefined",
+    })
+  );
 });
 
 test("should be able to create tinacms form fields and override default", async () => {
-  const wrapper = ({ children }: any) => (
-    <Tina>
-      <DirectusContext.Provider value={createBrowserClient()}>
-        {children}
-      </DirectusContext.Provider>
-    </Tina>
-  );
   const { result, waitForNextUpdate } = renderHook(
     () =>
       useDirectusFields("news", {
@@ -56,4 +66,22 @@ test("should be able to create tinacms form fields and override default", async 
       component: "text",
     })
   );
+});
+test("should show error when not authenticated", async () => {
+  server.use(
+    rest.get("/api/fields/:collection", async (req, res, ctx) => {
+      return res.once(ctx.status(403));
+    })
+  );
+  const { result, waitForNextUpdate } = renderHook(
+    () =>
+      useDirectusFields("news", {
+        customFields: {
+          status: TextField,
+        },
+      }),
+    { wrapper }
+  );
+  await waitForNextUpdate();
+  expect(result.current).toEqual([]);
 });

@@ -1,12 +1,7 @@
-import { AbstractField } from "./AbstractField";
-import { IField } from "@directus/sdk-js/dist/types/schemes/directus/Field";
-import SDK from "@directus/sdk-js";
 import { AnyField } from "@tinacms/forms";
+import { AbstractField } from "./AbstractField";
 
 export class ImageField extends AbstractField {
-  constructor(field: IField) {
-    super(field);
-  }
   async map(): Promise<AnyField> {
     this.tinaField.component = "image";
 

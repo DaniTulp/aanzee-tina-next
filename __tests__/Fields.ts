@@ -1,5 +1,5 @@
-import { TextField } from "src/fields/TextField";
 import { StatusField } from "src/fields/StatusField";
+import { TextField } from "src/fields/TextField";
 
 test("it should map a text field correctly", () => {
   const tinaField = new TextField({

@@ -1,7 +1,6 @@
-import React from "react";
 import { renderHook } from "@testing-library/react-hooks";
-import { useDirectusClient, DirectusContext } from "src/react/useDirectus";
-import { createBrowserClient } from "src/lib/createDirectusClient";
+import React from "react";
+import { createBrowserClient, DirectusContext, useDirectusClient } from "src";
 
 test("Expect exception to be thrown if there is no context", () => {
   const { result } = renderHook(() => useDirectusClient());

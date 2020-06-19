@@ -1,4 +1,3 @@
-import { useDirectusClient } from "./useDirectus";
 import { useEffect, useState } from "react";
 import { IField } from "@directus/sdk-js/dist/types/schemes/directus/Field";
 import { TextAreaField } from "../fields/TextAreaField";
@@ -11,6 +10,8 @@ import { StatusField } from "../fields/StatusField";
 import { UndefinedField } from "../fields/UndefinedField";
 import { TagsField } from "../fields/TagsField";
 import { Field, useCMS } from "tinacms";
+import { useAuth } from "./AuthProvider";
+import { useDirectusClient } from "./DirectusProvider";
 
 type FieldOptions = {
   customFields?: {
@@ -40,6 +41,7 @@ export function useDirectusFields(
   //TODO check if cms is available or throw error.
   const cms = useCMS();
   const client = useDirectusClient();
+  const { isAuthenticated } = useAuth();
   useEffect(() => {
     async function getFields() {
       try {
@@ -54,11 +56,12 @@ export function useDirectusFields(
         });
         setFields(await Promise.all(fields));
       } catch (exception) {
-        cms.alerts.error("Unauthorized")
+        setFields([])
+        cms.alerts.error("Unauthorized");
       }
     }
     getFields();
-  }, [collection]);
+  }, [collection, isAuthenticated]);
 
   return fields;
 }

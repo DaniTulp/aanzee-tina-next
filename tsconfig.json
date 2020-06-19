@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "src/*": ["src/*"],
-      "tests/*": ["__tests__/*"]
+      "tests/*": ["__tests__/*"],
+      "test/*": ["test/*"]
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -21,6 +22,7 @@
       "esnext"
     ],
     "types": [
+      "msw",
       "react",
       "jest",
       "node"
@@ -35,6 +37,7 @@
     "**/*.tsx",
   ],
   "exclude": [
+    "build",
     "node_modules",
   ]
 }
