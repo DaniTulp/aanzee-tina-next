@@ -1,6 +1,6 @@
 {
   "name": "@danitulp/aanzee-tina-next",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "main": "./build/index.js",
   "module": "./build/src/index.js",
   "types": "src/index.ts",
