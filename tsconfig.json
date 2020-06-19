@@ -12,14 +12,15 @@
     "jsx": "react",
     "module": "esnext",
     "esModuleInterop": true,
-    "target": "ES2019",
+    "target": "ES6",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
     "lib": [
       "dom",
-      "esnext"
+      "ES6"
     ],
     "types": [
       "msw",
