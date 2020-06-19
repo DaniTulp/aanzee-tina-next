@@ -1,6 +1,6 @@
 {
   "name": "@danitulp/aanzee-tina-next",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "./build/index.js",
   "module": "./build/src/index.js",
   "types": "src/index.ts",
@@ -57,7 +57,6 @@
     "styled-components": "^5.1.0",
     "tinacms": "^0.21.1",
     "ts-jest": "^26.1.0",
-    "tslib": "^2.0.0",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {

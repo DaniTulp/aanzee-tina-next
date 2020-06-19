@@ -12,7 +12,7 @@
     "jsx": "react",
     "module": "esnext",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "preserveConstEnums": true,
