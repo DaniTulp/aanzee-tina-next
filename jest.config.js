@@ -1,5 +1,4 @@
 module.exports = {
-  setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["./test/setup-env.ts"],
   modulePathIgnorePatterns: ["<rootDir>/build/"],
   moduleNameMapper: {

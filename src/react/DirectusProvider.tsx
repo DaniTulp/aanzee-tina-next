@@ -1,8 +1,7 @@
-import { createBrowserClient } from "../lib/createDirectusClient";
-import React, { ReactNode, useMemo, createContext, useContext } from "react";
+import SDK from "@directus/sdk-js";
+import React, { createContext, ReactNode, useContext, useMemo } from "react";
 import { AuthProvider } from "./AuthProvider";
 
-import SDK from "@directus/sdk-js";
 export const ERROR_MISSING_CLIENT = `useDirectusClient could not find an instance of Directus SDK`;
 
 export const DirectusContext = createContext<SDK>(null);
@@ -18,13 +17,15 @@ export function useDirectusClient(): SDK {
 
 export function DirectusProvider({
   children,
+  client,
   Unauthenticated,
 }: {
+  client: SDK;
   children?: ReactNode;
   Unauthenticated?: React.FC;
 }) {
   return (
-    <DirectusContext.Provider value={createBrowserClient()}>
+    <DirectusContext.Provider value={client}>
       <AuthProvider Unauthenticated={Unauthenticated}>{children}</AuthProvider>
     </DirectusContext.Provider>
   );

@@ -1,18 +1,23 @@
-import React from "react";
 import {
+  act,
+  fireEvent,
   render,
   waitFor,
-  fireEvent,
-  act,
-  waitForElementToBeRemoved,
+  waitForElementToBeRemoved
 } from "@testing-library/react";
-import { DirectusProvider, Tina } from "src";
-import { server, rest } from "test/server";
+import React from "react";
+import { Tina } from "src";
+import { rest, server } from "test/server";
 
 const setup = () => {
   return render(
-    <Tina>
-      <DirectusProvider>I am authenticated</DirectusProvider>
+    <Tina
+      options={{
+        url: "http://localhost/",
+        project: "api",
+      }}
+    >
+      I am authenticated
     </Tina>
   );
 };
@@ -50,7 +55,7 @@ test("Should show the modal when it's unauthenticated and be able to reauthentic
     await fireEvent.submit(passwordInput);
   });
 
-  expect(getByText("Reauthenticate")).toBeInTheDocument()
+  expect(getByText("Reauthenticate")).toBeInTheDocument();
   fireEvent.change(emailInput, { target: { value: "admin@example.com" } });
   await act(async () => {
     await fireEvent.submit(passwordInput);

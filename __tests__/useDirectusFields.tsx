@@ -1,28 +1,11 @@
 import { renderHook } from "@testing-library/react-hooks";
 import React from "react";
-import {
-  AuthContext,
-  createBrowserClient,
-  DirectusContext,
-  Tina,
-  useDirectusFields
-} from "src";
+import { Tina, useDirectusFields } from "src";
 import { TextField } from "src/fields/TextField";
 import { rest, server } from "test/server";
 
 const wrapper = ({ children }: any) => (
-  <Tina>
-    <DirectusContext.Provider value={createBrowserClient()}>
-      <AuthContext.Provider
-        value={{
-          login: () => {},
-          isAuthenticated: true,
-        }}
-      >
-        {children}
-      </AuthContext.Provider>
-    </DirectusContext.Provider>
-  </Tina>
+  <Tina options={{ url: "http://localhost/", project: "api" }}>{children}</Tina>
 );
 
 test("should be able to create tinacms form fields from directus fields and filter out readonly and hidden fields", async () => {
@@ -30,6 +13,9 @@ test("should be able to create tinacms form fields from directus fields and filt
     () => useDirectusFields("news"),
     { wrapper }
   );
+
+  await waitForNextUpdate();
+
   expect(result.current).toEqual([]);
 
   await waitForNextUpdate();
@@ -61,6 +47,10 @@ test("should be able to create tinacms form fields and override default", async 
     { wrapper }
   );
   await waitForNextUpdate();
+
+  expect(result.current).toEqual([]);
+
+await waitForNextUpdate();
   expect(result.current[0]).toEqual(
     expect.objectContaining({
       component: "text",

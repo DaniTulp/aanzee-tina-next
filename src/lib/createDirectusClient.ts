@@ -1,33 +1,35 @@
 import { SDK as DirectusSDK } from "@directus/sdk-js";
 import {
-  IStorageAPI,
   IConfigurationOptions,
+  IStorageAPI
 } from "@directus/sdk-js/dist/types/Configuration";
-import {
-  ILoginCredentials,
-  ILoginOptions,
-  ILoginBody,
-} from "@directus/sdk-js/dist/types/schemes/auth/Login";
 import { IAuthenticateResponse } from "@directus/sdk-js/dist/types/schemes/auth/Authenticate";
-//TODO fix env as a configuration parameter not .env
-export function createServerClient(preview: boolean = false) {
+import {
+  ILoginBody,
+  ILoginCredentials,
+  ILoginOptions
+} from "@directus/sdk-js/dist/types/schemes/auth/Login";
+
+export function createServerClient(options: {
+  url: string;
+  project: string;
+  token: string;
+}) {
   return new DirectusSDK({
-    url: process.env.DIRECTUS_URL!,
-    project: process.env.DIRECTUS_PROJECT!,
-    token: preview
-      ? process.env.DIRECTUS_PREVIEW_TOKEN!
-      : process.env.DIRECTUS_TOKEN!,
     mode: "jwt",
+    ...options,
   });
 }
 
-export function createBrowserClient() {
+export function createBrowserClient(options: { url: string; project: string }) {
   return SDK.getInstance({
-    project: process.env.NEXT_PUBLIC_DIRECTUS_PROJECT!,
-    url: process.env.NEXT_PUBLIC_DIRECTUS_URL!,
     mode: "jwt",
     persist: true,
-    storage: window.sessionStorage as IStorageAPI,
+    storage:
+      typeof window !== "undefined"
+        ? (window.sessionStorage as IStorageAPI)
+        : null,
+    ...options,
   });
 }
 
@@ -39,6 +41,13 @@ class SDK extends DirectusSDK {
   private static instance: DirectusSDK;
   private constructor(options: IConfigurationOptions) {
     super(options);
+  }
+
+  public static getInstance(options: IConfigurationOptions) {
+    if (!SDK.instance) {
+      SDK.instance = new SDK(options);
+    }
+    return SDK.instance;
   }
 
   private startInterval(fireImmediately?: boolean): void {
@@ -53,7 +62,7 @@ class SDK extends DirectusSDK {
   }
 
   /**
-   * The login method is really stupid and throws errors.
+   * The provided login method is really stupid and throws non-catchable errors.
    * @param credentials
    * @param options
    */
@@ -107,12 +116,5 @@ class SDK extends DirectusSDK {
     }
 
     return activeRequest;
-  }
-
-  public static getInstance(options: IConfigurationOptions) {
-    if (!SDK.instance) {
-      SDK.instance = new SDK(options);
-    }
-    return SDK.instance;
   }
 }

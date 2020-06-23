@@ -1,28 +1,32 @@
 import React, { ReactNode, useMemo } from "react";
+import { HtmlFieldPlugin, MarkdownFieldPlugin } from "react-tinacms-editor";
+import { createBrowserClient } from "src/lib/createDirectusClient";
+import { DirectusProvider } from "src/react/DirectusProvider";
 import {
-  TinaProvider,
   MediaStore,
   MediaUploadOptions,
   TinaCMS,
   TinaCMSConfig,
+  TinaProvider
 } from "tinacms";
-import { HtmlFieldPlugin, MarkdownFieldPlugin } from "react-tinacms-editor";
 import { DirectusMediaStore } from "./MediaStore";
 import { SingleRelationFieldPlugin } from "./Relation/SingleRelationField";
-import { createBrowserClient } from "src/lib/createDirectusClient";
 
 export function Tina({
   children,
   config,
+  options,
 }: {
   children: ReactNode;
   config?: TinaCMSConfig;
+  options: { url: string; project: string };
 }) {
+  const directusClient = createBrowserClient(options);
   const tinaCMSConfig: TinaCMSConfig = {
     media: {
       store:
         typeof window !== "undefined"
-          ? new DirectusMediaStore(createBrowserClient())
+          ? new DirectusMediaStore(directusClient)
           : new DummyMediaStore(),
     },
     ...config,
@@ -32,7 +36,11 @@ export function Tina({
   cms.fields.add(HtmlFieldPlugin);
   cms.fields.add(MarkdownFieldPlugin);
   cms.fields.add(SingleRelationFieldPlugin);
-  return <TinaProvider cms={cms}>{children}</TinaProvider>;
+  return (
+    <TinaProvider cms={cms}>
+      <DirectusProvider client={directusClient}>{children}</DirectusProvider>
+    </TinaProvider>
+  );
 }
 //TODO temporary fix.
 class DummyMediaStore implements MediaStore {
