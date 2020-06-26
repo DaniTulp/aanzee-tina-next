@@ -14,7 +14,10 @@ test("Expect exception to be thrown if there is no context", () => {
 
 test("Expect to get a directusclient back", () => {
   const wrapper = ({ children }: any) => (
-    <DirectusContext.Provider value={createBrowserClient()}>
+    <DirectusContext.Provider value={createBrowserClient({
+      url: "http://localhost/",
+      project: "api"
+    })}>
       {children}
     </DirectusContext.Provider>
   );

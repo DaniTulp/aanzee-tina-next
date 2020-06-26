@@ -1,9 +1,23 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
 
-export const PreviewContext = createContext<boolean>(false);
+const PreviewContext = createContext<boolean>(null);
 
 export function usePreview() {
   const preview = useContext(PreviewContext);
-
+  if(preview === null) {
+    throw('No PreviewContext found')
+  }
   return preview;
+}
+
+export function PreviewProvider({
+  children,
+  value,
+}: {
+  children?: React.ReactNode;
+  value: boolean;
+}) {
+  return (
+    <PreviewContext.Provider value={value}>{children}</PreviewContext.Provider>
+  );
 }
