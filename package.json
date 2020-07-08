@@ -1,13 +1,10 @@
 {
   "name": "@danitulp/aanzee-tina-next",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "main": "./build/index.cjs.js",
   "module": "./build/lib/index.js",
   "types": "src/index.ts",
   "sideEffects": false,
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "scripts": {
     "test": "jest --ci",
     "test-watch": "jest --watch",
