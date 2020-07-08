@@ -13,11 +13,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmjs.org'
-    - run: |
-        yarn
-        yarn build
-        yarn test
-        yarn publish
+    - run: yarn
+    - run: yarn build
+    - run: yarn test
+    - run: yarn publish
       env:
         ci: true
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -27,11 +26,10 @@ jobs:
         always-auth: true
         registry-url: "https://npm.pkg.github.com"
         scope: "@danitulp"
-     - run: |
-        yarn
-        yarn build
-        yarn test
-        yarn publish
+    - run: yarn
+    - run: yarn build
+    - run: yarn test
+    - run: yarn publish
       env:
         ci: true
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
