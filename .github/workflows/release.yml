@@ -7,25 +7,32 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-          always-auth: true
-          registry-url: "https://npm.pkg.github.com"
-          scope: "@danitulp"
-      - name: yarn install, build, test and publish
-        run: |
-          yarn
-          yarn build
-          yarn test
-          yarn publish
-        env:
-          CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v2
+    # Setup .npmrc file to publish to npm
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+      run: |
+        yarn
+        yarn build
+        yarn test
+        yarn publish
+      env:
+        ci: true
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        always-auth: true
+        registry-url: "https://npm.pkg.github.com"
+        scope: "@danitulp"
+      run: |
+        yarn
+        yarn build
+        yarn test
+        yarn publish
+      env:
+        ci: true
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

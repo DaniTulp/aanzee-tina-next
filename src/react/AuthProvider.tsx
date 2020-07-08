@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useDirectusClient } from "./DirectusProvider";
 import { LoginModal } from "./LoginModal";
 
@@ -31,7 +31,7 @@ export function AuthProvider(props: any) {
       setIsLoading(false);
     }
     checkAuth();
-  }, []);
+  }, [client.config.token]);
 
   const login = async (credentials: Credentials) => {
     try {

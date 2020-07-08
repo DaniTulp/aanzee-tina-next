@@ -23,6 +23,8 @@ export function Tina({
 }) {
   const directusClient = createBrowserClient(options);
   const tinaCMSConfig: TinaCMSConfig = {
+    sidebar: true,
+    toolbar: true,
     media: {
       store:
         typeof window !== "undefined"

@@ -1,3 +1,5 @@
+![Run Jest Tests](https://github.com/DaniTulp/aanzee-tina-next/workflows/Run%20Jest%20Tests/badge.svg)
+
 # Setup
 
 ```
